@@ -12,14 +12,106 @@ const data = {
   service: process.env.K_SERVICE || '???',
   revision: process.env.K_REVISION || '???',
 };
-let template;
 
-app.get('/', async (req, res) => {
+app.get('/default.html', async (req, res) => {
+  let template;
+  // The handlebars template is stored in global state so this will only once.
+  if (!template) {
+    // Load Handlebars template from filesystem and compile for use.
+    try {
+      template = handlebars.compile(readFileSync('default.html.hbs', 'utf8'));
+    } catch (e) {
+      console.error(e);
+      res.status(500).send('Internal Server Error');
+    }
+  }
+
+  // Apply the template to the parameters to generate an HTML string.
+  try {
+    const output = template(data);
+    res.status(200).send(output);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get(['/','/index.html'], async (req, res) => {
+  let template;
   // The handlebars template is stored in global state so this will only once.
   if (!template) {
     // Load Handlebars template from filesystem and compile for use.
     try {
       template = handlebars.compile(readFileSync('index.html.hbs', 'utf8'));
+    } catch (e) {
+      console.error(e);
+      res.status(500).send('Internal Server Error');
+    }
+  }
+
+  // Apply the template to the parameters to generate an HTML string.
+  try {
+    const output = template(data);
+    res.status(200).send(output);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/links.html', async (req, res) => {
+  let template;
+  // The handlebars template is stored in global state so this will only once.
+  if (!template) {
+    // Load Handlebars template from filesystem and compile for use.
+    try {
+      template = handlebars.compile(readFileSync('links.html.hbs', 'utf8'));
+    } catch (e) {
+      console.error(e);
+      res.status(500).send('Internal Server Error');
+    }
+  }
+
+  // Apply the template to the parameters to generate an HTML string.
+  try {
+    const output = template(data);
+    res.status(200).send(output);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/upload.html', async (req, res) => {
+  let template;
+  // The handlebars template is stored in global state so this will only once.
+  if (!template) {
+    // Load Handlebars template from filesystem and compile for use.
+    try {
+      template = handlebars.compile(readFileSync('upload.html.hbs', 'utf8'));
+    } catch (e) {
+      console.error(e);
+      res.status(500).send('Internal Server Error');
+    }
+  }
+
+  // Apply the template to the parameters to generate an HTML string.
+  try {
+    const output = template(data);
+    res.status(200).send(output);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/check-status.html', async (req, res) => {
+  let template;
+  // The handlebars template is stored in global state so this will only once.
+  if (!template) {
+    // Load Handlebars template from filesystem and compile for use.
+    try {
+      template = handlebars.compile(readFileSync('check-status.html.hbs', 'utf8'));
     } catch (e) {
       console.error(e);
       res.status(500).send('Internal Server Error');
